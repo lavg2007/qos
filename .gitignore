@@ -4,3 +4,6 @@
 
 # Vim
 *.swp
+
+# Arduino
+*build/
