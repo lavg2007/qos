@@ -1,0 +1,6 @@
+# Kicad
+*-cache.lib
+*.sch-bak
+
+# Vim
+*.swp
