@@ -328,6 +328,16 @@ F 3 "" H 5300 4550 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	5500 4450 5000 4450
+Wire Wire Line
+	5500 1950 4800 1950
+Wire Wire Line
+	4800 1950 4800 4400
+Wire Wire Line
+	4800 4400 2800 4400
+Wire Wire Line
+	2800 4400 2800 3550
+Wire Wire Line
+	2800 3550 2950 3550
 Wire Bus Line
 	2700 1400 2700 3150
 Wire Bus Line
