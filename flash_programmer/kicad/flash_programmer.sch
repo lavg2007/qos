@@ -50,8 +50,6 @@ Wire Wire Line
 Wire Wire Line
 	6300 2550 7950 2550
 Wire Wire Line
-	6300 2650 6450 2650
-Wire Wire Line
 	6650 2750 7950 2750
 Wire Wire Line
 	7950 2850 6750 2850
@@ -163,18 +161,12 @@ F 3 "" H 5900 1750 50  0001 C CNN
 	1    5900 1750
 	1    0    0    -1  
 $EndComp
-NoConn ~ 6300 2850
-Wire Wire Line
-	6450 2650 6450 3400
 Wire Wire Line
 	6450 3400 5450 3400
 Wire Wire Line
 	5450 3400 5450 3950
 Wire Wire Line
 	5450 3950 5500 3950
-Connection ~ 6450 2650
-Wire Wire Line
-	6450 2650 7950 2650
 Wire Wire Line
 	6300 3950 6650 3950
 NoConn ~ 6300 4850
@@ -244,53 +236,23 @@ Entry Wire Line
 	2700 3150 2800 3250
 Wire Bus Line
 	2700 1400 9300 1400
-$Comp
-L MCU_Module:Arduino_UNO_R3 A1
-U 1 1 5EF6174D
-P 3450 2950
-F 0 "A1" H 3450 4131 50  0000 C CNN
-F 1 "Arduino_UNO_R3" H 3450 4040 50  0000 C CNN
-F 2 "Module:Arduino_UNO_R3" H 3450 2950 50  0001 C CIN
-F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 3450 2950 50  0001 C CNN
-	1    3450 2950
-	1    0    0    -1  
-$EndComp
 NoConn ~ 2950 2350
 NoConn ~ 2950 2450
 $Comp
 L power:GND #PWR?
 U 1 1 5EF9C932
-P 3450 4100
-F 0 "#PWR?" H 3450 3850 50  0001 C CNN
-F 1 "GND" H 3455 3927 50  0000 C CNN
-F 2 "" H 3450 4100 50  0001 C CNN
-F 3 "" H 3450 4100 50  0001 C CNN
-	1    3450 4100
+P 3550 4050
+F 0 "#PWR?" H 3550 3800 50  0001 C CNN
+F 1 "GND" H 3555 3877 50  0000 C CNN
+F 2 "" H 3550 4050 50  0001 C CNN
+F 3 "" H 3550 4050 50  0001 C CNN
+	1    3550 4050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3450 4100 3450 4050
-Wire Wire Line
-	3350 4050 3450 4050
-Connection ~ 3450 4050
-Wire Wire Line
-	3450 4050 3550 4050
-Wire Wire Line
-	2950 3450 2700 3450
-Wire Wire Line
 	4900 4150 4900 4500
 Wire Wire Line
-	4900 4500 2700 4500
-Wire Wire Line
-	2700 3450 2700 4500
-Wire Wire Line
 	4900 4150 5500 4150
-Wire Wire Line
-	2950 3350 2600 3350
-Wire Wire Line
-	2600 3350 2600 4600
-Wire Wire Line
-	2600 4600 5000 4600
 Wire Wire Line
 	5000 4600 5000 4450
 $Comp
@@ -333,11 +295,174 @@ Wire Wire Line
 Wire Wire Line
 	4800 1950 4800 4400
 Wire Wire Line
-	4800 4400 2800 4400
+	6300 2650 7950 2650
 Wire Wire Line
-	2800 4400 2800 3550
+	6300 2850 6450 2850
+Wire Wire Line
+	6450 2850 6450 3400
+$Comp
+L power:+5V #PWR?
+U 1 1 5EF83D5D
+P 7550 4150
+F 0 "#PWR?" H 7550 4000 50  0001 C CNN
+F 1 "+5V" H 7565 4323 50  0000 C CNN
+F 2 "" H 7550 4150 50  0001 C CNN
+F 3 "" H 7550 4150 50  0001 C CNN
+	1    7550 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US 1k?
+U 1 1 5EF85C47
+P 7850 4150
+F 0 "1k?" V 7900 4250 50  0001 C CNN
+F 1 "1k" V 7900 4250 50  0000 C CNN
+F 2 "" H 7850 4150 50  0001 C CNN
+F 3 "~" H 7850 4150 50  0001 C CNN
+	1    7850 4150
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	7750 4150 7550 4150
+$Comp
+L MCU_Module:Arduino_Nano_v3.x A1
+U 1 1 5EF8BBEE
+P 3450 2950
+F 0 "A1" H 3950 1900 50  0000 C CNN
+F 1 "Arduino_Nano_v3.x" H 4000 1800 50  0000 C CNN
+F 2 "Module:Arduino_Nano" H 3450 2950 50  0001 C CIN
+F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 3450 2950 50  0001 C CNN
+	1    3450 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 3950 3550 3950
+Wire Wire Line
+	3550 4050 3550 3950
+Connection ~ 3550 3950
+Wire Wire Line
+	7950 3950 7450 3950
+Wire Wire Line
+	7450 3950 7450 5400
+Wire Wire Line
+	7450 5400 2950 5400
+Wire Wire Line
+	2950 5400 2950 3650
+Wire Wire Line
+	7950 4250 7950 5500
+Wire Wire Line
+	7950 5500 4400 5500
+Wire Wire Line
+	4400 5500 4400 2950
+Wire Wire Line
+	4400 2950 3950 2950
+Wire Wire Line
+	4800 4400 2700 4400
+Wire Wire Line
+	2700 4400 2700 3350
+Wire Wire Line
+	2700 3350 2950 3350
+Wire Wire Line
+	2950 3450 2750 3450
+Wire Wire Line
+	2750 3450 2750 4600
+Wire Wire Line
+	2750 4600 5000 4600
+Wire Wire Line
+	4900 4500 2800 4500
+Wire Wire Line
+	2800 4500 2800 3550
 Wire Wire Line
 	2800 3550 2950 3550
+NoConn ~ 7950 3650
+NoConn ~ 7950 3750
+Connection ~ 4900 4150
+Wire Wire Line
+	5500 2450 5000 2450
+Wire Wire Line
+	5000 2450 5000 4450
+Connection ~ 5000 4450
+Wire Wire Line
+	5500 2150 4900 2150
+Wire Wire Line
+	4900 2150 4900 4150
+$Comp
+L Device:R_Small_US R?
+U 1 1 5EFD8EDA
+P 5400 2550
+F 0 "R?" V 5500 2650 50  0001 C CNN
+F 1 "1k" V 5300 2500 50  0000 C CNN
+F 2 "" H 5400 2550 50  0001 C CNN
+F 3 "~" H 5400 2550 50  0001 C CNN
+	1    5400 2550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5EFD8EE0
+P 5300 2550
+F 0 "#PWR?" H 5300 2300 50  0001 C CNN
+F 1 "GND" H 5305 2377 50  0000 C CNN
+F 2 "" H 5300 2550 50  0001 C CNN
+F 3 "" H 5300 2550 50  0001 C CNN
+	1    5300 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 5EFDBB59
+P 5400 2250
+F 0 "R?" V 5500 2350 50  0001 C CNN
+F 1 "1k" V 5300 2200 50  0000 C CNN
+F 2 "" H 5400 2250 50  0001 C CNN
+F 3 "~" H 5400 2250 50  0001 C CNN
+	1    5400 2250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5EFDC37C
+P 3650 1950
+F 0 "#PWR?" H 3650 1800 50  0001 C CNN
+F 1 "+5V" H 3665 2123 50  0000 C CNN
+F 2 "" H 3650 1950 50  0001 C CNN
+F 3 "" H 3650 1950 50  0001 C CNN
+	1    3650 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5EFDF354
+P 5300 2250
+F 0 "#PWR?" H 5300 2100 50  0001 C CNN
+F 1 "+5V" V 5315 2378 50  0000 L CNN
+F 2 "" H 5300 2250 50  0001 C CNN
+F 3 "" H 5300 2250 50  0001 C CNN
+	1    5300 2250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 5EFE7284
+P 5400 4250
+F 0 "R?" V 5500 4350 50  0001 C CNN
+F 1 "1k" V 5300 4200 50  0000 C CNN
+F 2 "" H 5400 4250 50  0001 C CNN
+F 3 "~" H 5400 4250 50  0001 C CNN
+	1    5400 4250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5EFE728A
+P 5300 4250
+F 0 "#PWR?" H 5300 4100 50  0001 C CNN
+F 1 "+5V" V 5315 4378 50  0000 L CNN
+F 2 "" H 5300 4250 50  0001 C CNN
+F 3 "" H 5300 4250 50  0001 C CNN
+	1    5300 4250
+	0    -1   -1   0   
+$EndComp
 Wire Bus Line
 	2700 1400 2700 3150
 Wire Bus Line
