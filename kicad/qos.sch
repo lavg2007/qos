@@ -1,4 +1,195 @@
-EESchema Schematic File Version 2
-EELAYER 25 0
+EESchema Schematic File Version 4
+EELAYER 30 0
 EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Switch:TL2201 SW1
+U 1 1 5EF7BE34
+P 1850 5250
+F 0 "SW1" H 1850 5375 50  0000 C CNN
+F 1 "TL2201" H 1850 5284 50  0000 C CNN
+F 2 "" H 1850 5250 50  0001 C CNN
+F 3 "" H 1850 5250 50  0001 C CNN
+	1    1850 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R1
+U 1 1 5EF7D5FA
+P 1150 5550
+F 0 "R1" H 1218 5596 50  0000 L CNN
+F 1 "10k" H 1218 5505 50  0000 L CNN
+F 2 "" H 1150 5550 50  0001 C CNN
+F 3 "~" H 1150 5550 50  0001 C CNN
+	1    1150 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 5350 1150 5350
+$Comp
+L power:GND #PWR?
+U 1 1 5EF7F79E
+P 1150 5750
+F 0 "#PWR?" H 1150 5500 50  0001 C CNN
+F 1 "GND" H 1155 5577 50  0000 C CNN
+F 2 "" H 1150 5750 50  0001 C CNN
+F 3 "" H 1150 5750 50  0001 C CNN
+	1    1150 5750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 5650 1150 5750
+Wire Wire Line
+	1150 5350 1150 5450
+$Comp
+L power:+5V #PWR?
+U 1 1 5EF821B3
+P 2200 5150
+F 0 "#PWR?" H 2200 5000 50  0001 C CNN
+F 1 "+5V" H 2215 5323 50  0000 C CNN
+F 2 "" H 2200 5150 50  0001 C CNN
+F 3 "" H 2200 5150 50  0001 C CNN
+	1    2200 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 5150 2200 5450
+Wire Wire Line
+	2200 5450 2050 5450
+$Comp
+L power:GND #PWR?
+U 1 1 5EF83208
+P 3250 6000
+F 0 "#PWR?" H 3250 5750 50  0001 C CNN
+F 1 "GND" H 3255 5827 50  0000 C CNN
+F 2 "" H 3250 6000 50  0001 C CNN
+F 3 "" H 3250 6000 50  0001 C CNN
+	1    3250 6000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R3
+U 1 1 5EF840FC
+P 4050 5100
+F 0 "R3" H 4118 5146 50  0000 L CNN
+F 1 "8.8k" H 4118 5055 50  0000 L CNN
+F 2 "" H 4050 5100 50  0001 C CNN
+F 3 "~" H 4050 5100 50  0001 C CNN
+	1    4050 5100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5EF84A33
+P 4050 4750
+F 0 "#PWR?" H 4050 4600 50  0001 C CNN
+F 1 "+5V" H 4065 4923 50  0000 C CNN
+F 2 "" H 4050 4750 50  0001 C CNN
+F 3 "" H 4050 4750 50  0001 C CNN
+	1    4050 4750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5EF864B3
+P 4050 6000
+F 0 "#PWR?" H 4050 5750 50  0001 C CNN
+F 1 "GND" H 4055 5827 50  0000 C CNN
+F 2 "" H 4050 6000 50  0001 C CNN
+F 3 "" H 4050 6000 50  0001 C CNN
+	1    4050 6000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C1
+U 1 1 5EF84F32
+P 4050 5900
+F 0 "C1" H 4142 5946 50  0000 L CNN
+F 1 "0.1u" H 4142 5855 50  0000 L CNN
+F 2 "" H 4050 5900 50  0001 C CNN
+F 3 "~" H 4050 5900 50  0001 C CNN
+	1    4050 5900
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 5550 3750 5550
+Wire Wire Line
+	4050 5200 4050 5550
+$Comp
+L Device:R_Small_US R2
+U 1 1 5EF94CA9
+P 3750 5100
+F 0 "R2" H 3818 5146 50  0000 L CNN
+F 1 "10k" H 3818 5055 50  0000 L CNN
+F 2 "" H 3750 5100 50  0001 C CNN
+F 3 "~" H 3750 5100 50  0001 C CNN
+	1    3750 5100
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 5200 3750 5350
+Wire Wire Line
+	3750 5350 4300 5350
+Wire Wire Line
+	4050 4750 4050 4850
+Wire Wire Line
+	3750 5000 3750 4850
+Wire Wire Line
+	3750 4850 4050 4850
+Connection ~ 4050 4850
+Wire Wire Line
+	4050 4850 4050 5000
+Connection ~ 3750 4850
+Wire Wire Line
+	2550 5750 2750 5750
+Wire Wire Line
+	3750 4850 2550 4850
+Wire Wire Line
+	2550 4850 2550 5750
+Wire Wire Line
+	2050 5350 2750 5350
+$Comp
+L power:GND #PWR?
+U 1 1 5EFAAA5D
+P 2700 6000
+F 0 "#PWR?" H 2700 5750 50  0001 C CNN
+F 1 "GND" H 2705 5827 50  0000 C CNN
+F 2 "" H 2700 6000 50  0001 C CNN
+F 3 "" H 2700 6000 50  0001 C CNN
+	1    2700 6000
+	-1   0    0    -1  
+$EndComp
+Connection ~ 3750 5350
+$Comp
+L Timer:NE555P U1
+U 1 1 5EF788FD
+P 3250 5550
+F 0 "U1" H 3250 6131 50  0000 C CNN
+F 1 "NE555P" H 3250 6040 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 3900 5150 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/ne555.pdf" H 4100 5150 50  0001 C CNN
+	1    3250 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2750 5550 2700 5550
+Wire Wire Line
+	4050 5750 4050 5800
+Wire Wire Line
+	4050 5750 3750 5750
+Wire Wire Line
+	3250 5950 3250 6000
+Wire Wire Line
+	2700 5550 2700 6000
 $EndSCHEMATC
