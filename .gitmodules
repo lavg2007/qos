@@ -1,0 +1,3 @@
+[submodule "kicad/libs/6502"]
+	path = kicad/libs/6502
+	url = https://github.com/Alarm-Siren/6502-kicad-library.git
