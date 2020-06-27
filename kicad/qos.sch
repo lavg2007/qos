@@ -192,4 +192,30 @@ Wire Wire Line
 	3250 5950 3250 6000
 Wire Wire Line
 	2700 5550 2700 6000
+$Comp
+L 65xx:W65C02SxP U2
+U 1 1 5EF7B451
+P 7100 3000
+F 0 "U2" H 7100 4731 50  0000 C CNN
+F 1 "W65C02SxP" H 7100 4640 50  0000 C CIB
+F 2 "" H 7100 5000 50  0001 C CNN
+F 3 "http://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf" H 7100 4900 50  0001 C CNN
+	1    7100 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5EF7E118
+P 7100 4550
+F 0 "#PWR?" H 7100 4300 50  0001 C CNN
+F 1 "GND" H 7105 4377 50  0000 C CNN
+F 2 "" H 7100 4550 50  0001 C CNN
+F 3 "" H 7100 4550 50  0001 C CNN
+	1    7100 4550
+	1    0    0    -1  
+$EndComp
+Text GLabel 4300 5350 2    50   Input ~ 0
+CLK
+Text GLabel 6500 2100 0    50   Input ~ 0
+CLK
 $EndSCHEMATC
