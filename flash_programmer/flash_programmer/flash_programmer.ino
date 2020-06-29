@@ -3,6 +3,7 @@
 #define SHIFT_DONE_PIN 11
 #define WRITE_ENABLE 13
 #define READ_ENABLE 14
+#define CHIP_ENABLE 15
 #define BAUDRATE 115200
 #define D0 2
 #define D1 3
@@ -19,17 +20,23 @@
 void setup() 
 {
     Serial.begin(BAUDRATE)  ;
-
-    setup_pins(OUTPUT);
-}
-
-void setup_pins(int mode)
-{
     pinMode(SHIFT_SER_PIN, OUTPUT);
     pinMode(SHIFT_SRCLK_PIN, OUTPUT);
     pinMode(SHIFT_DONE_PIN, OUTPUT);
     pinMode(WRITE_ENABLE, OUTPUT);
     pinMode(READ_ENABLE, OUTPUT);
+    pinMode(CHIP_ENABLE, OUTPUT);
+    digitalWrite(SHIFT_SER_PIN, LOW);
+    digitalWrite(SHIFT_SRCLK_PIN, LOW);
+    digitalWrite(SHIFT_DONE_PIN, LOW);
+    digitalWrite(WRITE_ENABLE, HIGH);
+    digitalWrite(READ_ENABLE, HIGH);
+    
+}
+
+void setup_pins(int mode)
+{
+
 
     pinMode(D0, mode);
     pinMode(D1, mode);
@@ -40,11 +47,7 @@ void setup_pins(int mode)
     pinMode(D6, mode);
     pinMode(D7, mode);
 
-    digitalWrite(SHIFT_SER_PIN, LOW);
-    digitalWrite(SHIFT_SRCLK_PIN, LOW);
-    digitalWrite(SHIFT_DONE_PIN, LOW);
-    digitalWrite(WRITE_ENABLE, HIGH);
-    digitalWrite(READ_ENABLE, HIGH);
+
 }
 
 void loop() 
@@ -55,38 +58,100 @@ void loop()
         command.trim();
         if(command == "read")
         {
-            Serial.print("Reading from flash");
+            Serial.print("Reading from flash\n");
+            setup_pins(INPUT);
             read_test_data();
-            Serial.print("READING done");
+            Serial.print("READING done\n");
         }
         else if(command == "write")
         {
-            Serial.print("Writing to flash");
+            Serial.print("Writing to flash\n");
+            setup_pins(OUTPUT);
             write_test_data();
-            Serial.print("Writing done");
+            set_data(0);
+            Serial.print("Writing done\n");
+        }
+        else if(command == "erase")
+        {
+            Serial.print("Erasing chip\n");
+            setup_pins(OUTPUT);
+            chip_erase();
+            Serial.print("Chip erased\n");
+        }
+        else
+        {
+            Serial.print("Invalid command\n");
         }
     }
     
 }
 
+void pulse_write_enable(unsigned int address, byte data)
+{
+    set_address(address);
+    digitalWrite(WRITE_ENABLE, LOW);
+    set_data(data);
+    delayMicroseconds(1);
+    digitalWrite(WRITE_ENABLE, HIGH);
+}
+
+void chip_erase()
+{
+    digitalWrite(CHIP_ENABLE, LOW);
+    digitalWrite(READ_ENABLE, HIGH);
+    pulse_write_enable(0x5555, 0xAA);
+    pulse_write_enable(0x2AAA, 0x55);
+    pulse_write_enable(0x5555, 0x80);
+    pulse_write_enable(0x5555, 0xAA);
+    pulse_write_enable(0x2AAA, 0x55);
+    pulse_write_enable(0x5555, 0x10);
+    delay(100);
+}
+
 void write_test_data()
 {
     int percent = 0;
-    for(unsigned int i = 0x00; i < 0xFFFF; i++)
+    digitalWrite(READ_ENABLE, HIGH);
+    digitalWrite(CHIP_ENABLE, LOW);
+    bool c = true;
+    unsigned int i = 0;
+    int p = 0;
+    while(c)
     {
-        set_address(i);
-        set_data(0xec);
-        send_data();
-    }  
+        
+        if (i % 655 == 0)
+        {
+            Serial.print(p);
+            Serial.print("%\n");  
+            p++;
+        }
+        if (i != 0xFFFC && i != 0xFFFD)
+          send_data(i, 0xea);
+        if (i >= 0xFFFF) c = false;
+        i++;
+    }
+    send_data(0xFFFC, 0x14);
+    send_data(0xFFFD, 0x13);
 }
 
 void read_test_data()
 {
-    for(unsigned int i = 0; i < 0xFFFF; i++)
+    digitalWrite(WRITE_ENABLE, HIGH);
+    digitalWrite(CHIP_ENABLE, LOW);
+    char buf[50];
+    for(unsigned int i = 0xF000; i < 0xFFFF; i++)
     {
         set_address(i);
-        read_data();
+        byte data = read_data();
+        sprintf(buf, "%04X %02X\n", i, data);
+        Serial.print(buf);
+        delayMicroseconds(1);
     }
+    set_address(0xFFFF);
+    byte data = read_data();
+    sprintf(buf, "%04X %02X\n", 0xFFFF, data);
+    Serial.print(buf);
+    delayMicroseconds(1);
 }
 
 void set_data(byte data)
@@ -109,16 +174,43 @@ void set_address(unsigned int address)
     digitalWrite(SHIFT_DONE_PIN, LOW);
 }
 
-void send_data()
+void send_data(unsigned int addr, byte data)
 {
-    digitalWrite(WRITE_ENABLE, LOW);
-    digitalWrite(WRITE_ENABLE, HIGH);
+    pulse_write_enable(0x5555, 0xAA);
+    pulse_write_enable(0x2AAA, 0x55);
+    pulse_write_enable(0x5555, 0xA0);
+    pulse_write_enable(addr, data);
+//    set_address(0x5555);
+//    digitalWrite(WRITE_ENABLE, LOW);
+//    set_data(0xAA);
+//    delayMicroseconds(1);
+//    digitalWrite(WRITE_ENABLE, HIGH);
+//
+//    set_address(0x2AAA);
+//    digitalWrite(WRITE_ENABLE, LOW);
+//    set_data(0x55);
+//    delayMicroseconds(1);
+//    digitalWrite(WRITE_ENABLE, HIGH);
+//
+//    set_address(0x5555);
+//    digitalWrite(WRITE_ENABLE, LOW);
+//    set_data(0xA0);
+//    delayMicroseconds(1);
+//    digitalWrite(WRITE_ENABLE, HIGH);
+//
+//    set_address(addr);
+//    digitalWrite(WRITE_ENABLE, LOW);
+//    set_data(data);
+//    delayMicroseconds(1);
+//    digitalWrite(WRITE_ENABLE, HIGH);
+    
+    delayMicroseconds(20);
 }
 
 byte read_data()
 {
     digitalWrite(READ_ENABLE, LOW);
-    delayMicroseconds(1);
+    delayMicroseconds(10);
     byte data = 0;
     data += digitalRead(D7) << 7;
     data += digitalRead(D6) << 6;
@@ -129,8 +221,7 @@ byte read_data()
     data += digitalRead(D1) << 1;
     data += digitalRead(D0);
     digitalWrite(READ_ENABLE, HIGH);
-    Serial.print(data,HEX);
-    Serial.print('\n');   
+    return data;
 }
 
 

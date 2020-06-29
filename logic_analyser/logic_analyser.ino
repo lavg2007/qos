@@ -13,23 +13,23 @@ void setup()
     {
         pinMode(input_pins[i], INPUT);
     }
-    //attachInterrupt(digitalPinToInterrupt(CLK_PIN), interrupt_handler, FALLING);
+    attachInterrupt(digitalPinToInterrupt(CLK_PIN), interrupt_handler, FALLING);
 }
 
 void loop()
 {
-    digitalWrite(CLK_PIN, HIGH);
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(RATE);
-    
-    digitalWrite(CLK_PIN, LOW);
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(RATE/2);
-    unsigned int data = read_pins();
-    char buf[50];
-    sprintf(buf, "%04X\n", data);
-    Serial.print(buf); 
-    delay(RATE/2);
+    //digitalWrite(CLK_PIN, HIGH);
+//    digitalWrite(LED_BUILTIN, HIGH);
+//    delay(RATE);
+//    
+//    digitalWrite(CLK_PIN, LOW);
+//    digitalWrite(LED_BUILTIN, LOW);
+//    delay(RATE/2);
+//    unsigned int data = read_pins();
+//    char buf[50];
+//    sprintf(buf, "%04X\n", data);
+//    Serial.print(buf); 
+//    delay(RATE/2);
 }
 
 unsigned int read_pins()
@@ -45,9 +45,9 @@ unsigned int read_pins()
 
 void interrupt_handler()
 {
-    delay(1);
+    Serial.print("interrupt\n");
     unsigned int data = read_pins();
-    char buf[50];
+    char buf[20];
     sprintf(buf, "%04X\n", data);
     
     Serial.print(buf); 
