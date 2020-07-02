@@ -4,10 +4,13 @@
 
 # Vim
 *.swp
-
+*.swo
 # Arduino
 *build/
 
 # C
 *.out
 *.o
+
+
+*.bin
