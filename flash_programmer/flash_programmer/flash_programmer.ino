@@ -116,6 +116,11 @@ void write_test_data()
     bool c = true;
     unsigned int i = 0;
     int p = 0;
+    send_data(0xFFFC, 0x14);
+    send_data(0xFFFD, 0x13);
+    send_data(0x1315, 0x8C);
+    send_data(0x1316, 0xCD);
+    send_data(0x1317, 0xAB);
     while(c)
     {
         
@@ -125,13 +130,12 @@ void write_test_data()
             Serial.print("%\n");  
             p++;
         }
-        if (i != 0xFFFC && i != 0xFFFD)
+        if (i != 0xFFFC && i != 0xFFFD && (i < 0x1315 || i > 0x1320) )
           send_data(i, 0xea);
         if (i >= 0xFFFF) c = false;
         i++;
     }
-    send_data(0xFFFC, 0x14);
-    send_data(0xFFFD, 0x13);
+
 }
 
 void read_test_data()
@@ -139,7 +143,7 @@ void read_test_data()
     digitalWrite(WRITE_ENABLE, HIGH);
     digitalWrite(CHIP_ENABLE, LOW);
     char buf[50];
-    for(unsigned int i = 0xF000; i < 0xFFFF; i++)
+    for(unsigned int i = 0x0; i < 0xFFFF; i++)
     {
         set_address(i);
         byte data = read_data();

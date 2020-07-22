@@ -8,10 +8,12 @@ unsigned char input_pins[16] = {3,4,5,6,7,8,9,10,11,12,A0,A1,A2,A3,A4, A5};
 void setup()
 {
     Serial.begin(BAUDRATE);
-    pinMode(CLK_PIN, OUTPUT);
+    pinMode(CLK_PIN, INPUT);
+    digitalWrite(CLK_PIN, LOW);
     for (int i = 0; i < 16; i++)
     {
         pinMode(input_pins[i], INPUT);
+        digitalWrite(input_pins[i], LOW);
     }
     attachInterrupt(digitalPinToInterrupt(CLK_PIN), interrupt_handler, FALLING);
 }
@@ -22,7 +24,7 @@ void loop()
 //    digitalWrite(LED_BUILTIN, HIGH);
 //    delay(RATE);
 //    
-//    digitalWrite(CLK_PIN, LOW);
+//    digitalWrite(CLK_PIN, LOW); 
 //    digitalWrite(LED_BUILTIN, LOW);
 //    delay(RATE/2);
 //    unsigned int data = read_pins();
@@ -45,7 +47,6 @@ unsigned int read_pins()
 
 void interrupt_handler()
 {
-    Serial.print("interrupt\n");
     unsigned int data = read_pins();
     char buf[20];
     sprintf(buf, "%04X\n", data);
