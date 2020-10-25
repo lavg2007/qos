@@ -46,8 +46,6 @@ void setup_pins(int mode)
     pinMode(D5, mode);
     pinMode(D6, mode);
     pinMode(D7, mode);
-
-
 }
 
 void loop() 
@@ -71,19 +69,51 @@ void loop()
             set_data(0);
             Serial.print("Writing done\n");
         }
+        else if(command == "writefile")
+        {
+            chip_erase();
+            Serial.print("w\n");
+            Serial.flush();
+            delay(50);
+            setup_pins(OUTPUT);
+            digitalWrite(READ_ENABLE, HIGH);
+            digitalWrite(CHIP_ENABLE, LOW);
+
+            unsigned int i = 0;
+            while(i < 0xFFFF)
+            {
+              while(Serial.available() > 0)
+              {
+                  byte b = Serial.read();
+                  send_data(i++, b);
+                
+                  Serial.print('c');
+                  Serial.flush();
+              }
+            }
+            if(Serial.available() > 0)
+            {
+                byte b = Serial.read();
+                send_data(0xFFFF, b);
+              
+                Serial.print('c');
+                Serial.flush();
+            }
+            set_data(0);
+
+        }
         else if(command == "erase")
         {
-            Serial.print("Erasing chip\n");
-            setup_pins(OUTPUT);
+            
             chip_erase();
-            Serial.print("Chip erased\n");
+            Serial.print("e");
+            Serial.flush();
         }
         else
         {
             Serial.print("Invalid command\n");
         }
-    }
-    
+    }   
 }
 
 void pulse_write_enable(unsigned int address, byte data)
@@ -97,6 +127,7 @@ void pulse_write_enable(unsigned int address, byte data)
 
 void chip_erase()
 {
+    setup_pins(OUTPUT);
     digitalWrite(CHIP_ENABLE, LOW);
     digitalWrite(READ_ENABLE, HIGH);
     pulse_write_enable(0x5555, 0xAA);
@@ -118,10 +149,15 @@ void write_test_data()
     int p = 0;
     send_data(0xFFFC, 0x14);
     send_data(0xFFFD, 0x13);
+    send_data(0x1314, 0xEA);
     send_data(0x1315, 0x8C);
     send_data(0x1316, 0xCD);
     send_data(0x1317, 0xAB);
-    while(c)
+    send_data(0x1318, 0xC8);
+    send_data(0x1319, 0x4C);
+    send_data(0x131A, 0x14);
+    send_data(0x131B, 0x13);
+    /*while(c)
     {
         
         if (i % 655 == 0)
@@ -134,7 +170,7 @@ void write_test_data()
           send_data(i, 0xea);
         if (i >= 0xFFFF) c = false;
         i++;
-    }
+    }*/
 
 }
 
@@ -143,7 +179,7 @@ void read_test_data()
     digitalWrite(WRITE_ENABLE, HIGH);
     digitalWrite(CHIP_ENABLE, LOW);
     char buf[50];
-    for(unsigned int i = 0x0; i < 0xFFFF; i++)
+    for(unsigned int i = 0xF000; i < 0xFFFF; i++)
     {
         set_address(i);
         byte data = read_data();

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include <fstream>
+#include <vector>
 #ifdef __linux__
 #include <termios.h>
 #include <fcntl.h>
@@ -65,7 +66,6 @@ set_blocking (int fd, int should_block)
 
 int main(int argc, char** argv)
 {
-    int i = 0;
     int option;
     std::string port_name;
     std::string file_name;
@@ -84,6 +84,7 @@ int main(int argc, char** argv)
     }
 
     std::fstream file;
+    std::cout << file_name << std::endl;
     file.open(file_name);
     
     if (!file.is_open())
@@ -91,8 +92,13 @@ int main(int argc, char** argv)
         std::cout << "Error opening file" << std::endl;
         return 1;
     }
-    
+     
     int arduino = open(port_name.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
+    if(arduino == -1)
+    {
+        std::cout << "Error opening port" << std::endl;
+        return 1;
+    }
     set_interface_attribs(arduino, B115200, 0);
     set_blocking(arduino, 0);
     
@@ -100,19 +106,46 @@ int main(int argc, char** argv)
     char bin_file[65536];
     file.read(bin_file, 65536);
 
-
-    int written_bytes = write(arduino, "erase\n", 5);
-    int read_bytes = 0;
     bool done = false;
+
+    /*
+    int written_bytes = write(arduino, "erase\n", 5);
+    tcdrain(arduino);
+    std::cout << "send erase" << std::endl;
+    int read_bytes = 0;
     while(!done)
     {
-        usleep(1000000);
-        int b = read(arduino, buffer + read_bytes, 65536);
-        if(b == 0)
-            break;
-        read_bytes += b;
-        std::cout << read_bytes << std::endl;
+        int b = read(arduino, buffer, 2);
+        if(b != 0)
+            done = true;
     }
+    usleep(500000);*/
+    std::cout << buffer << std::endl;
+    memset(buffer, 0, 65536);
+    int written_bytes = write(arduino, "writefile\n", 9);
+    std::cout << "send writefile" << std::endl;
+    while(!done)
+    {
+        int b = read(arduino, buffer, 2);
+        if(b != 0)
+            break;
+    }
+    std::cout << buffer << std::endl;
+    for(long i = 0; i < 65536; i++)
+    {
+        
+        char response; 
+        int b = 0;
+        int w = write(arduino, bin_file + i, 1); 
+        tcdrain(arduino);
+        while(b == 0)
+        {
+            b = read(arduino, &response, 1);
+        }
+        std::cout << i << '\t' << w << '\t' << *(bin_file + 1) << '\t' << response << std::endl;
+    }
+
+
     std::string msg(buffer);
     std::cout << msg;
     
