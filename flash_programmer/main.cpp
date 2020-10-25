@@ -142,7 +142,7 @@ int main(int argc, char** argv)
         {
             b = read(arduino, &response, 1);
         }
-        std::cout << i << '\t' << w << '\t' << *(bin_file + 1) << '\t' << response << std::endl;
+        std::cout << i << '\t' << w << '\t' << (int)*(bin_file + 1) << '\t' << response << std::endl;
     }
 
 
